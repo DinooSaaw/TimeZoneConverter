@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 from time_zones import time_zone_mapping
 
@@ -25,6 +25,9 @@ def get_source_time():
 
 def calculate_time_difference(target_datetime):
     time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
+    if time_difference.total_seconds() < 0:
+        target_datetime += timedelta(days=1)  # Move to the next day
+        time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
     seconds = time_difference.total_seconds()
     hours = int(seconds // 3600)
     minutes = int((seconds % 3600) // 60)
