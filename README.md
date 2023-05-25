@@ -23,8 +23,6 @@ This is a Python script that allows you to convert time between different time z
 
 - The script uses a dictionary `time_zone_mapping` to map custom time zone abbreviations to pytz time zones. You can modify this dictionary to include additional time zones or modify the existing ones according to your needs.
 
-- The script supports time zones like 'PST', 'EST', 'CST', 'MST', 'HST', 'AKST', 'AEST', 'ACST', 'AWST', 'CET', 'IST', and more. You can extend the dictionary with additional time zones if required.
-
 ## Error Handling
 
 - The script includes error handling to handle potential errors and invalid inputs. It validates the user-entered time zones and time format to ensure accurate conversions.
