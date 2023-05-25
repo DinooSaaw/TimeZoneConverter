@@ -7,17 +7,17 @@ def validate_time_zone(time_zone):
         raise ValueError("Invalid time zone entered.")
 
 def get_source_time_zone():
-    source_tz = input("Enter the source time zone (e.g., PST): ")
+    source_tz = input("Enter the source time zone (e.g., PST): ") or 'PST'
     validate_time_zone(source_tz)
     return time_zone_mapping[source_tz.upper()]
 
 def get_target_time_zone():
-    target_tz = input("Enter the target time zone (e.g., AEST): ")
+    target_tz = input("Enter the target time zone (e.g., AEST): ") or 'AEST'
     validate_time_zone(target_tz)
     return time_zone_mapping[target_tz.upper()]
 
 def get_source_time():
-    source_time_str = input("Enter the source time (e.g., 9 am): ")
+    source_time_str = input("Enter the source time (e.g., 9 am): ") or '9 am'
     try:
         return datetime.strptime(source_time_str, "%I %p")
     except ValueError as e:
