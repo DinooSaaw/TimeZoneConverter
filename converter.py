@@ -1,17 +1,7 @@
 from datetime import datetime
 import pytz
 
-# Prompt the user for the source time zone
-source_tz = input("Enter the source time zone (PST): ")
-
-# Prompt the user for the source time
-source_time_str = input("Enter the source time (9 am): ")
-source_time = datetime.strptime(source_time_str, "%I %p")
-
-# Prompt the user for the target time zone
-target_tz = input("Enter the target time zone (AEST): ")
-
-# Define a dictionary to map custom time zone identifiers to pytz time zones
+# Define a dictionary to map custom time zone abbreviations to pytz time zones
 time_zone_mapping = {
     'PST': 'America/Los_Angeles',
     'EST': 'America/New_York',
@@ -27,31 +17,68 @@ time_zone_mapping = {
     # Add more time zones as needed
 }
 
-# Convert the source time zone to the corresponding pytz time zone
-source_tz = time_zone_mapping.get(source_tz.upper(), source_tz)
-target_tz = time_zone_mapping.get(target_tz.upper(), target_tz)
+def validate_time_zone(time_zone):
+    if time_zone.upper() not in time_zone_mapping.keys():
+        raise ValueError("Invalid time zone entered.")
+
+def get_source_time_zone():
+    source_tz = input("Enter the source time zone (PST): ")
+    validate_time_zone(source_tz)
+    return time_zone_mapping[source_tz.upper()]
+
+def get_target_time_zone():
+    target_tz = input("Enter the target time zone (AEST): ")
+    validate_time_zone(target_tz)
+    return time_zone_mapping[target_tz.upper()]
+
+def get_source_time():
+    source_time_str = input("Enter the source time (9 am): ")
+    try:
+        return datetime.strptime(source_time_str, "%I %p")
+    except ValueError:
+        raise ValueError("Invalid time format entered.")
+
+def calculate_time_difference(target_datetime):
+    time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
+    seconds = time_difference.total_seconds()
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    seconds = int(seconds % 60)
+    return hours, minutes, seconds
+
+# Prompt the user for the source time zone
+try:
+    source_tz = get_source_time_zone()
+except ValueError as e:
+    print("Error:", str(e))
+    exit()
+
+# Prompt the user for the source time
+try:
+    source_time = get_source_time()
+except ValueError as e:
+    print("Error:", str(e))
+    exit()
+
+# Prompt the user for the target time zone
+try:
+    target_tz = get_target_time_zone()
+except ValueError as e:
+    print("Error:", str(e))
+    exit()
 
 # Get the current date
 current_date = datetime.now().date()
 
 # Combine the current date with the source time
-source_datetime = pytz.timezone(source_tz).localize(
-    datetime.combine(current_date, source_time.time()))
+source_datetime = pytz.timezone(source_tz).localize(datetime.combine(current_date, source_time.time()))
 
 # Convert the source time to the target time zone
 target_datetime = source_datetime.astimezone(pytz.timezone(target_tz))
 
 # Calculate the time difference until the target time
-time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
-
-# Format the time difference
-seconds = time_difference.total_seconds()
-hours = int(seconds // 3600)
-minutes = int((seconds % 3600) // 60)
-seconds = int(seconds % 60)
+hours, minutes, seconds = calculate_time_difference(target_datetime)
 
 # Print the converted time and the formatted time remaining
 print("Converted time:", target_datetime.strftime("%Y-%m-%d %H:%M:%S"))
-print(
-    f"Time remaining until target time: {hours} Hours {minutes} Mins {seconds} Seconds"
-)
+print(f"Time remaining until target time: {hours} Hours {minutes} Mins {seconds} Seconds")
