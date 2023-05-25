@@ -58,7 +58,8 @@ while True:
         hours, minutes, seconds = calculate_time_difference(target_datetime)
 
         # Print the converted time and the formatted time remaining
-        print("Converted time:", target_datetime.strftime("%Y-%m-%d %H:%M:%S"))
+        converted_time = target_datetime.strftime("%H:%M:%S")
+        print("Converted time:", converted_time)
         print(f"Time remaining until target time: {hours} Hours {minutes} Mins {seconds} Seconds")
         
         # Prompt the user if they want to convert again
