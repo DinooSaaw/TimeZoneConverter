@@ -1,21 +1,6 @@
 from datetime import datetime
+from time_zones import time_zone_mapping
 import pytz
-
-# Define a dictionary to map custom time zone abbreviations to pytz time zones
-time_zone_mapping = {
-    'PST': 'America/Los_Angeles',
-    'EST': 'America/New_York',
-    'CST': 'America/Chicago',
-    'MST': 'America/Denver',
-    'HST': 'Pacific/Honolulu',
-    'AKST': 'America/Anchorage',
-    'AEST': 'Australia/Sydney',
-    'ACST': 'Australia/Adelaide',
-    'AWST': 'Australia/Perth',
-    'CET': 'Europe/Paris',
-    'IST': 'Asia/Kolkata',
-    # Add more time zones as needed
-}
 
 def validate_time_zone(time_zone):
     if time_zone.upper() not in time_zone_mapping.keys():
