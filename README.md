@@ -39,5 +39,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - The script utilizes the pytz library for time zone conversions. Visit the [pytz documentation](https://pypi.org/project/pytz/) for more information.
 
-- This script was created with the assistance of OpenAI's ChatGPT.
 
