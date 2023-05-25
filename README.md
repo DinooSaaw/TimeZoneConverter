@@ -31,12 +31,6 @@ This is a Python script that allows you to convert time between different time z
 
 - If an error occurs during user input, an error message will be displayed, and the script will exit.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgements
 
 - The script utilizes the pytz library for time zone conversions. Visit the [pytz documentation](https://pypi.org/project/pytz/) for more information.
-
-

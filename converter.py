@@ -35,8 +35,8 @@ def get_source_time():
     source_time_str = input("Enter the source time (9 am): ")
     try:
         return datetime.strptime(source_time_str, "%I %p")
-    except ValueError:
-        raise ValueError("Invalid time format entered.")
+    except ValueError as e:
+        raise ValueError("Invalid time format entered.") from e
 
 def calculate_time_difference(target_datetime):
     time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
@@ -50,21 +50,21 @@ def calculate_time_difference(target_datetime):
 try:
     source_tz = get_source_time_zone()
 except ValueError as e:
-    print("Error:", str(e))
+    print("Error:", e)
     exit()
 
 # Prompt the user for the source time
 try:
     source_time = get_source_time()
 except ValueError as e:
-    print("Error:", str(e))
+    print("Error:", e)
     exit()
 
 # Prompt the user for the target time zone
 try:
     target_tz = get_target_time_zone()
 except ValueError as e:
-    print("Error:", str(e))
+    print("Error:", e)
     exit()
 
 # Get the current date
