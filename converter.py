@@ -31,9 +31,18 @@ def get_source_time() -> datetime:
 
 def calculate_time_difference(target_datetime: datetime, target_tz: str) -> tuple:
     """Calculate the time difference until the target time."""
-    time_difference = target_datetime - datetime.now(pytz.timezone(target_tz))
+    # Convert the target time to UTC
+    target_utc = target_datetime.astimezone(pytz.utc)
+    
+    # Get the current time in UTC
+    current_utc = datetime.now(pytz.utc)
+    
+    # Calculate the time difference
+    time_difference = target_utc - current_utc
+    
     if time_difference.total_seconds() < 0:
         raise ValueError("Target time is in the past.")
+    
     seconds = time_difference.total_seconds()
     hours = int(seconds // 3600)
     minutes = int((seconds % 3600) // 60)
